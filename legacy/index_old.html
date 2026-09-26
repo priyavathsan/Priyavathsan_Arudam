@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ta">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ஆருட ஜோதிடம் (Arudam Prediction)</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Mukta+Malar:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>🔮 ஆருட பலன்</h1>
+            <p>எண்ணை தேர்ந்தெடுங்கள், விதியை அறியுங்கள்</p>
+        </header>
+
+        <main>
+            <div class="input-section">
+                <label for="luckyNumber">1 முதல் 12 வரை ஒரு எண்ணைத் தேர்ந்தெடுக்கவும்:</label>
+                <input type="number" id="luckyNumber" min="1" max="12" placeholder="எண் (1-12)">
+                <button id="predictBtn">பலன் சொல்</button>
+            </div>
+
+            <div id="result" class="result-section hidden">
+                <div class="card">
+                    <h2>உங்கள் பலன்</h2>
+                    <div class="result-item">
+                        <span class="label">தேர்ந்தெடுத்த எண்:</span>
+                        <span id="displayNumber" class="value"></span>
+                    </div>
+                    <div class="result-item">
+                        <span class="label">இலக்கினம் (Ascendant):</span>
+                        <span id="ascendant" class="value"></span>
+                    </div>
+                    <div class="result-item">
+                        <span class="label">6-ஆம் வீடு (6th House):</span>
+                        <span id="sixthHouse" class="value"></span>
+                    </div>
+
+                    <div class="prediction-box">
+                        <h3>பொதுவான பலன்:</h3>
+                        <p id="predictionText"></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panchangam Section -->
+            <div id="daily-info" class="daily-section">
+                <div class="card">
+                    <h2>இன்றைய பஞ்சாங்கம் (Today's Panchangam)</h2>
+                    <div class="result-item">
+                        <span class="label">திதி (Tithi):</span>
+                        <span id="tithi" class="value">Loading...</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="label">நட்சத்திரம் (Nakshatra):</span>
+                        <span id="nakshatra" class="value">Loading...</span>
+                    </div>
+                </div>
+
+                <div class="card navagraha-card">
+                    <h2>நவக்கிரகங்கள் (Navagraha Position)</h2>
+                    <div id="navagraha-grid" class="navagraha-grid">
+                        <!-- Planets will be inserted here by JS -->
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 Arudam Astrology AI. Created for Demo.</p>
+        </footer>
+    </div>
+    <!-- Astronomy Engine Library -->
+    <script src="astronomy.min.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
