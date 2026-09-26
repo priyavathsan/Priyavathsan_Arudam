@@ -11,6 +11,7 @@ import { ChandranTimingCard } from './components/ChandranTimingCard';
 import { PredictionPanel } from './components/PredictionPanel';
 import { RuleTrace } from './components/RuleTrace';
 import { CalculationInfoPanel } from './components/CalculationInfoPanel';
+import { AstrologerProfiles } from './components/AstrologerProfiles';
 
 // Existing preserved components
 import { MissingObjectCard } from './components/MissingObjectCard';
@@ -181,6 +182,18 @@ export const App: React.FC = () => {
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 no-print">
         {/* Important Traditional Disclaimer */}
         <Disclaimer />
+
+        {/* Astrologer Profiles Section */}
+        {activeTab === 'dashboard' && (
+          <div className="mb-6">
+            <div className="mb-4">
+              <span className="text-xs font-mono font-semibold text-amber-400 tracking-wider uppercase block mb-2">
+                {isTamil ? 'நன்றி' : 'Credits'}
+              </span>
+            </div>
+            <AstrologerProfiles />
+          </div>
+        )}
 
         {/* Tab 1: Analysis Dashboard */}
         {activeTab === 'dashboard' && (
