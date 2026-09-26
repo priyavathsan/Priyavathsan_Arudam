@@ -38,15 +38,7 @@ const ProfileImage: React.FC<ProfileImageProps> = ({ name, imagePath, title, des
 
 export const AstrologerProfiles: React.FC = () => {
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 p-4 bg-cosmic-950/50 rounded-xl border border-amber-500/20">
-      {/* Thiruman */}
-      <ProfileImage
-        name="Thiruman"
-        imagePath="/Thiruman.jpg"
-        title="Traditional Wisdom"
-        description="Sacred marking of traditional astrologers"
-      />
-
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 bg-cosmic-950/50 rounded-xl border border-amber-500/20">
       {/* Srimad Ramanujar */}
       <ProfileImage
         name="Srimad Ramanujar"
@@ -55,20 +47,20 @@ export const AstrologerProfiles: React.FC = () => {
         description="Inspiration for Vedic knowledge"
       />
 
-      {/* Priyavathsan - Om Shirt */}
-      <ProfileImage
-        name="Priyavathsan Sridharan Iyengar"
-        imagePath="/Priyavathsan_Ohm_shirt.png"
-        title="Astrology Practitioner"
-        description="Contact: +91-9486483808"
-      />
-
-      {/* Agathiyar */}
+      {/* Sri Agasthiya Maha Rishi */}
       <ProfileImage
         name="Sri Agasthiya Maha Rishi"
         imagePath="/Agathiyar.jpg"
         title="Siddha Sage"
         description="Ancient author of Tamil astrology"
+      />
+
+      {/* Priyavathsan Sridharan Iyengar */}
+      <ProfileImage
+        name="Priyavathsan Sridharan Iyengar"
+        imagePath="/Priyavathsan_Ohm_shirt.png"
+        title="Astrology Practitioner"
+        description="Contact: +91-9486483808"
       />
     </div>
   );
