@@ -179,7 +179,11 @@ export const App: React.FC = () => {
       />
 
       {/* Main Container */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 no-print">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 no-print relative">
+        {/* Left-side Priyavathsan image near Step 1 */}
+        <div className="absolute left-4 top-48 w-44 h-56 rounded-lg overflow-hidden border border-amber-500/30 shadow-md hidden md:block">
+          <img src="/Priyavathsan_Ohm_shirt.png" alt="Priyavathsan Sridharan Iyengar" className="w-full h-full object-cover" />
+        </div>
         {/* Important Traditional Disclaimer */}
         <Disclaimer />
 

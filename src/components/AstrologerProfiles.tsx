@@ -47,9 +47,9 @@ export const AstrologerProfiles: React.FC = () => {
         description="Sacred marking of traditional astrologers"
       />
 
-      {/* Ramanuja */}
+      {/* Srimad Ramanujar */}
       <ProfileImage
-        name="Ramanuja"
+        name="Srimad Ramanujar"
         imagePath="/Ramanuja.jpg"
         title="Vedic Scholar"
         description="Inspiration for Vedic knowledge"
@@ -57,7 +57,7 @@ export const AstrologerProfiles: React.FC = () => {
 
       {/* Priyavathsan - Om Shirt */}
       <ProfileImage
-        name="Priyavathsan"
+        name="Priyavathsan Sridharan Iyengar"
         imagePath="/Priyavathsan_Ohm_shirt.png"
         title="Astrology Practitioner"
         description="Contact: +91-9486483808"
@@ -65,7 +65,7 @@ export const AstrologerProfiles: React.FC = () => {
 
       {/* Agathiyar */}
       <ProfileImage
-        name="Agathiyar"
+        name="Sri Agasthiya Maha Rishi"
         imagePath="/Agathiyar.jpg"
         title="Siddha Sage"
         description="Ancient author of Tamil astrology"

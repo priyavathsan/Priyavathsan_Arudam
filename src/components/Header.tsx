@@ -21,7 +21,22 @@ export const Header: React.FC<HeaderProps> = ({
   const isTamil = language === 'ta';
 
   return (
-    <header className="glass-panel border-b border-amber-500/20 sticky top-0 z-40 bg-cosmic-950/90 backdrop-blur-md">
+    <header className="glass-panel border-b border-amber-500/20 sticky top-0 z-40 bg-cosmic-950/90 backdrop-blur-md relative">
+      {/* Top-center Thiruman */}
+      <div className="absolute left-1/2 -top-12 transform -translate-x-1/2 w-44 h-28 rounded-lg overflow-hidden border border-amber-500/30 shadow-md hidden sm:block">
+        <img src="/Thiruman.jpg" alt="Thiruman" className="w-full h-full object-cover" />
+      </div>
+
+      {/* Top-left: Ramanuja */}
+      <div className="absolute left-2 top-2 w-28 h-20 rounded-lg overflow-hidden border border-amber-500/30 shadow-md hidden md:block">
+        <img src="/Ramanuja.jpg" alt="Srimad Ramanujar" className="w-full h-full object-cover" />
+      </div>
+
+      {/* Top-right: Agasthiyar */}
+      <div className="absolute right-2 top-2 w-28 h-20 rounded-lg overflow-hidden border border-amber-500/30 shadow-md hidden md:block">
+        <img src="/Agathiyar.jpg" alt="Sri Agasthiya Maha Rishi" className="w-full h-full object-cover" />
+      </div>
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 sm:py-4">
         <div className="flex flex-col lg:flex-row items-center justify-between gap-4">
           {/* Logo & Title & Astrologer Credit */}
