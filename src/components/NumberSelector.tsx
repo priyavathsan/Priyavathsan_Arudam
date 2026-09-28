@@ -1,6 +1,5 @@
 import React from 'react';
 import { ARUDAM_MAPPINGS } from '../data/arudam';
-import { getSignById } from '../data/signs';
 import { useLanguage } from '../context/LanguageContext';
 
 interface NumberSelectorProps {
@@ -33,8 +32,8 @@ export const NumberSelector: React.FC<NumberSelectorProps> = ({
           </h2>
           <p className="text-xs text-slate-400 mt-1">
             {isTamil
-              ? 'கிளையண்ட் மனதில் நினைத்த எண்ணை தேர்ந்தெடுக்கவும் (மேஷம் = 1 முதல் மீனம் = 12 வரை)'
-              : 'Choose the number the client has held in mind (Counting from Mesham = 1 to Meenam = 12)'}
+              ? 'கிளையண்ட் மனதில் நினைத்த எண்ணை தேர்ந்தெடுக்கவும்'
+              : 'Choose the number the client has held in mind'}
           </p>
         </div>
 
@@ -55,14 +54,13 @@ export const NumberSelector: React.FC<NumberSelectorProps> = ({
       <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-12 gap-2.5 sm:gap-3">
         {ARUDAM_MAPPINGS.map(mapping => {
           const isSelected = selectedNumber === mapping.number;
-          const sign = getSignById(mapping.arudaSignId);
 
           return (
             <button
               key={mapping.number}
               type="button"
               onClick={() => onSelectNumber(mapping.number)}
-              aria-label={`Select number ${mapping.number} - ${sign.nameEn}`}
+              aria-label={`Select number ${mapping.number}`}
               aria-pressed={isSelected}
               className={`group relative flex flex-col items-center justify-center p-3 rounded-xl transition-all duration-200 cursor-pointer min-h-[92px] ${
                 isSelected
@@ -82,16 +80,6 @@ export const NumberSelector: React.FC<NumberSelectorProps> = ({
               <span className={`text-2xl font-mono font-extrabold ${isSelected ? 'text-cosmic-950' : 'text-amber-400'}`}>
                 {mapping.number}
               </span>
-
-              {/* Zodiac Symbol */}
-              <span className={`text-base my-0.5 ${isSelected ? 'text-cosmic-900' : 'text-slate-400'}`}>
-                {sign.symbol}
-              </span>
-
-              {/* Sign Name */}
-              <span className={`text-[11px] truncate max-w-full font-medium ${isSelected ? 'text-cosmic-950 font-bold' : 'text-slate-300'} ${isTamil ? 'font-tamil' : ''}`}>
-                {isTamil ? sign.nameTa.split(' ')[0] : sign.nameEn}
-              </span>
             </button>
           );
         })}
@@ -103,10 +91,7 @@ export const NumberSelector: React.FC<NumberSelectorProps> = ({
           <span className="font-semibold text-slate-300">
             {isTamil ? 'தேர்வு:' : 'Active selection:'}
           </span>{' '}
-          <span className="text-amber-300 font-mono font-bold">#{selectedNumber}</span> →{' '}
-          <span className="text-indigo-300 font-semibold">
-            {isTamil ? getSignById(selectedNumber).nameTa : getSignById(selectedNumber).nameEn}
-          </span>
+          <span className="text-amber-300 font-mono font-bold">#{selectedNumber}</span>
         </div>
 
         <button
