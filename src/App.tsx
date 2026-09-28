@@ -13,6 +13,7 @@ import { PredictionPanel } from './components/PredictionPanel';
 import { RuleTrace } from './components/RuleTrace';
 import { CalculationInfoPanel } from './components/CalculationInfoPanel';
 import { AstrologerProfiles } from './components/AstrologerProfiles';
+import { CareerJobSearchDirection } from './components/CareerJobSearchDirection';
 
 // Existing preserved components
 import { MissingObjectCard } from './components/MissingObjectCard';
@@ -300,6 +301,16 @@ export const App: React.FC = () => {
               selectedCategory={selectedCategory}
               onSelectCategory={(cat) => setSelectedCategory(cat)}
             />
+
+            {selectedCategory === 'job' && (
+              <CareerJobSearchDirection
+                selectedNumber={selectedNumber}
+                arudaRasi={arudaCalc.arudaRasi}
+                sixthRasi={sixthCalc.sixthRasi}
+                sixthLord={sixthCalc.sixthLord}
+                transitPlanets={transitResult.planets}
+              />
+            )}
 
             {/* 6. Phase 53 — Resolution / Fulfilment Panel */}
             <ResolutionPanel resolution={masterPrediction.prasnaResolution} />
