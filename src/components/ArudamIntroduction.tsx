@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useLanguage } from '../context/LanguageContext';
 
 const ProcessFlow: React.FC<{ children: React.ReactNode }> = ({ children }) => (
   <p className="rounded-lg border border-amber-500/20 bg-amber-500/5 p-3 font-semibold leading-relaxed text-amber-100">
@@ -6,20 +7,47 @@ const ProcessFlow: React.FC<{ children: React.ReactNode }> = ({ children }) => (
   </p>
 );
 
-export const ArudamIntroduction: React.FC = () => (
-  <section
-    aria-labelledby="arudam-introduction-title"
-    className="glass-panel-subtle mb-4 rounded-xl border border-amber-500/20 p-4 sm:p-6"
-  >
-    <header className="mb-5 border-b border-slate-700/70 pb-4">
-      <h2 id="arudam-introduction-title" className="font-tamil text-xl font-bold text-amber-200 sm:text-2xl">
-        ஆரூடம் என்றால் என்ன?
-      </h2>
-      <p className="mt-1 text-lg font-semibold text-amber-100 sm:text-xl">What is Arudam?</p>
-    </header>
+export const ArudamIntroduction: React.FC = () => {
+  const { language: appLanguage } = useLanguage();
+  const [contentLanguage, setContentLanguage] = useState(appLanguage);
+  const isTamil = contentLanguage === 'ta';
 
-    <div className="space-y-7">
-      <article lang="ta" className="font-tamil space-y-4 text-sm leading-relaxed text-slate-200 sm:text-base">
+  useEffect(() => {
+    setContentLanguage(appLanguage);
+  }, [appLanguage]);
+
+  return (
+    <section
+      aria-labelledby="arudam-introduction-title"
+      className="glass-panel-subtle mb-4 rounded-xl border border-amber-500/20 p-4 sm:p-6"
+    >
+      <header className="mb-5 flex flex-col gap-3 border-b border-slate-700/70 pb-4 sm:flex-row sm:items-center sm:justify-between">
+        <h2 id="arudam-introduction-title" className={`text-xl font-bold text-amber-200 sm:text-2xl ${isTamil ? 'font-tamil' : ''}`}>
+          {isTamil ? 'ஆரூடம் என்றால் என்ன?' : 'What is Arudam?'}
+        </h2>
+        <div className="flex w-fit gap-1 rounded-lg border border-slate-700 bg-cosmic-950 p-1" aria-label="Introduction language">
+          <button
+            type="button"
+            onClick={() => setContentLanguage('en')}
+            aria-pressed={!isTamil}
+            className={`rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${!isTamil ? 'bg-amber-500 text-cosmic-950' : 'text-slate-300 hover:bg-slate-800'}`}
+          >
+            English
+          </button>
+          <button
+            type="button"
+            onClick={() => setContentLanguage('ta')}
+            aria-pressed={isTamil}
+            className={`rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${isTamil ? 'bg-amber-500 text-cosmic-950' : 'text-slate-300 hover:bg-slate-800'}`}
+          >
+            தமிழ்
+          </button>
+        </div>
+      </header>
+
+      <div className="space-y-7">
+        {isTamil ? (
+          <article lang="ta" className="font-tamil space-y-4 text-sm leading-relaxed text-slate-200 sm:text-base">
         <section className="space-y-3">
           <p><strong className="text-amber-100">ஆரூடம் (Arudam / Aarudam)</strong> என்பது ஒருவர் மனதில் இருக்கும் ஒரு குறிப்பிட்ட கேள்வி, சந்தேகம் அல்லது நோக்கத்திற்கு, அந்த நேரத்தில் தேர்ந்தெடுக்கப்படும் எண்ணை அடிப்படையாகக் கொண்டு ஜோதிட முறையில் பலன் அறியும் ஒரு பாரம்பரிய <strong className="text-amber-100">பிரசன்ன (Prasanna) ஜோதிட முறையாகும்</strong>.</p>
           <p className="font-semibold text-amber-100">எளிமையாகச் சொன்னால்:</p>
@@ -53,9 +81,9 @@ export const ArudamIntroduction: React.FC = () => (
             <li>காரியம் எப்போது நிறைவேறும்?</li>
           </ul>
         </section>
-      </article>
-
-      <article lang="en" className="space-y-4 border-t border-slate-700/70 pt-6 text-sm leading-relaxed text-slate-300 sm:text-base">
+          </article>
+        ) : (
+          <article lang="en" className="space-y-4 text-sm leading-relaxed text-slate-300 sm:text-base">
         <section className="space-y-3">
           <p><strong className="text-amber-100">Arudam (Aarudam)</strong> is a traditional <strong className="text-amber-100">Prasanna (horary astrology) method</strong> used to seek guidance about a specific question, doubt, or intention that is in a person's mind at a particular moment.</p>
           <p className="font-semibold text-amber-100">In simple terms:</p>
@@ -89,7 +117,9 @@ export const ArudamIntroduction: React.FC = () => (
             <li>When is the matter likely to be fulfilled?</li>
           </ul>
         </section>
-      </article>
-    </div>
-  </section>
-);
+          </article>
+        )}
+      </div>
+    </section>
+  );
+};
