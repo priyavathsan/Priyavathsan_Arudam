@@ -115,12 +115,45 @@ describe('PHASE 38 — Comprehensive Arudam & 6th Rasi Tests (All 12 Cases)', ()
     expect(pred.lostObjectAnalysis.recoveryIndicationTa).toBeTruthy();
     expect(pred.missingPersonAnalysis.directionTa).toBeTruthy();
     expect(pred.sakunamAnalysis.favorabilityTa).toBeTruthy();
+    const sakunamRule = pred.matchedRules.find(rule => rule.category === 'sakunam');
+    expect(pred.sakunamAnalysis.ruleIndicationTa).toBe(sakunamRule?.predictionTa);
+    expect(pred.sakunamAnalysis.ruleIndicationTa).not.toBe('குலதெய்வ வழிபாடு மற்றும் சாந்தி பிரார்த்தனைக்கு பின் சுப முடிவு');
     // Resolution + Chandran Timing step added: trace now has 9 steps
     expect(pred.ruleTraceSteps.length).toBe(9);
     expect(pred.ruleTraceSteps.some(s => s.stage === 'CHANDRAN TIMING')).toBe(true);
     expect(pred.chandranFindingTime).toBeDefined();
     expect(pred.attributedTo).toContain('Priyavathsan Sridharan Iyengar');
     expect(pred.attributedTo).toContain('+91-9486483808');
+  });
+
+  it('uses only matched Sakunam rules for the next-stage indication across all numbers', () => {
+    const transit = calculateTransitPositions(new Date('2026-09-26T12:00:00Z'));
+
+    for (let selectedNumber = 1; selectedNumber <= 12; selectedNumber += 1) {
+      const arudaRes = calculateArudaLagnam(selectedNumber);
+      const sixthRes = calculateSixthRasi(arudaRes.arudaRasi);
+      const questions = classifyClientQuestion({
+        selectedNumber,
+        arudaRasi: arudaRes.arudaRasi,
+        sixthRasi: sixthRes.sixthRasi,
+        sixthLord: sixthRes.sixthLord,
+        transitPlanets: transit.planets
+      });
+      const prediction = generateArudamPrediction({
+        selectedNumber,
+        arudaRasi: arudaRes.arudaRasi,
+        sixthRasi: sixthRes.sixthRasi,
+        sixthLord: sixthRes.sixthLord,
+        transitPlanets: transit.planets,
+        classifiedQuestions: questions
+      });
+      const matchedSakunamRule = prediction.matchedRules.find(rule => rule.category === 'sakunam');
+
+      expect(prediction.sakunamAnalysis.ruleIndicationTa).toBe(matchedSakunamRule?.predictionTa);
+      expect(prediction.sakunamAnalysis.ruleIndicationTa).not.toBe(
+        'குலதெய்வ வழிபாடு மற்றும் சாந்தி பிரார்த்தனைக்கு பின் சுப முடிவு'
+      );
+    }
   });
 });
 

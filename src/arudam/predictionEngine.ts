@@ -65,8 +65,8 @@ export interface SakunamAnalysis {
   favorabilityTa: string;
   connectionEn: string;
   connectionTa: string;
-  nextStageEn: string;
-  nextStageTa: string;
+  ruleIndicationEn?: string;
+  ruleIndicationTa?: string;
 }
 
 export interface RuleTraceStep {
@@ -291,6 +291,7 @@ export const generateArudamPrediction = (params: {
   lostObjectAnalysis.timeCategoryTa = chandranFindingTime.timeCategoryTa;
 
   // Phase 18: Sakunam / Omen Analysis
+  const sakunamRule = matchedRules.find(rule => rule.category === 'sakunam');
   const sakunamAnalysis: SakunamAnalysis = {
     natureEn: ['jupiter', 'venus', 'mercury'].includes(sixthLord.id) ? 'Auspicious omen (Subha Nimitham) signifying blessing' : 'Cautionary omen (Asubha / Warning Nimitham) advising care',
     natureTa: ['jupiter', 'venus', 'mercury'].includes(sixthLord.id) ? 'சுப சகுனம் (மங்களகரமான அறிகுறி)' : 'எச்சரிக்கை சகுனம் (விழிப்புணர்வுக்கான அறிகுறி)',
@@ -298,8 +299,8 @@ export const generateArudamPrediction = (params: {
     favorabilityTa: ['jupiter', 'venus', 'mercury'].includes(sixthLord.id) ? 'காரியத்தில் தாராளமாக முன்னேறலாம்; தெய்வ அனுகூலம் உண்டு' : 'அவசர முடிவுகள், உடன்படிக்கைகளை தள்ளிப்போடுவது நலம்',
     connectionEn: `Directly tied to the matter ruled by ${sixthLord.englishOnly} (${sixthLord.karakattvamEn})`,
     connectionTa: `${sixthLord.tamilOnly} கிரகத்தின் காரகத்துவமான (${sixthLord.karakattvamTa}) காரியத்தோடு தொடர்புடையது`,
-    nextStageEn: 'Peaceful completion following traditional prayer to family deity (Kula Deivam)',
-    nextStageTa: 'குலதெய்வ வழிபாடு மற்றும் சாந்தி பிரார்த்தனைக்கு பின் சுப முடிவு'
+    ruleIndicationEn: sakunamRule?.predictionEn,
+    ruleIndicationTa: sakunamRule?.predictionTa
   };
 
   // Phase 25: Rule Trace ("Why this prediction?" / "இந்த பலன் ஏன்?")

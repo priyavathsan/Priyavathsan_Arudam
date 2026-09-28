@@ -314,10 +314,14 @@ export const PredictionPanel: React.FC<PredictionPanelProps> = ({
                 <span className="font-semibold text-slate-200">{isTamil ? sakunamAnalysis.connectionTa : sakunamAnalysis.connectionEn}</span>
               </div>
 
-              <div className="p-2.5 bg-slate-900/60 rounded-lg border border-slate-800/80">
-                <span className="text-slate-400 block mb-0.5">{isTamil ? 'அடுத்த கட்ட சுட்டு:' : 'Next-stage indication:'}</span>
-                <span className="font-semibold text-emerald-300">{isTamil ? sakunamAnalysis.nextStageTa : sakunamAnalysis.nextStageEn}</span>
-              </div>
+              {(sakunamAnalysis.ruleIndicationTa || sakunamAnalysis.ruleIndicationEn) && (
+                <div className="p-2.5 bg-slate-900/60 rounded-lg border border-slate-800/80">
+                  <span className="text-slate-400 block mb-0.5">{isTamil ? 'சகுன விதி சுட்டு:' : 'Sakunam rule indication:'}</span>
+                  <span className="font-semibold text-emerald-300">
+                    {isTamil ? sakunamAnalysis.ruleIndicationTa : sakunamAnalysis.ruleIndicationEn}
+                  </span>
+                </div>
+              )}
             </div>
           </div>
         )}
