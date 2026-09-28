@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useRef } from 'react';
 import { Header } from './components/Header';
+import { ArudamIntroduction } from './components/ArudamIntroduction';
 import { Disclaimer } from './components/Disclaimer';
 import { NumberSelector } from './components/NumberSelector';
 import { ArudamResult } from './components/ArudamResult';
@@ -180,6 +181,8 @@ export const App: React.FC = () => {
 
       {/* Main Container */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 no-print relative">
+        <ArudamIntroduction />
+
         {/* Important Traditional Disclaimer */}
         <Disclaimer />
 
