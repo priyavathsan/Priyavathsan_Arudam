@@ -181,11 +181,6 @@ export const App: React.FC = () => {
 
       {/* Main Container */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 no-print relative">
-        <ArudamIntroduction />
-
-        {/* Important Traditional Disclaimer */}
-        <Disclaimer />
-
         {/* Astrologer Profiles Section */}
         {activeTab === 'dashboard' && (
           <div className="mb-6">
@@ -197,6 +192,11 @@ export const App: React.FC = () => {
             <AstrologerProfiles />
           </div>
         )}
+
+        <ArudamIntroduction />
+
+        {/* Important Traditional Disclaimer */}
+        <Disclaimer />
 
         {/* Tab 1: Analysis Dashboard */}
         {activeTab === 'dashboard' && (
