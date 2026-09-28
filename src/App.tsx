@@ -289,13 +289,13 @@ export const App: React.FC = () => {
               />
             </section>
 
-            {/* 4. Step 3: Kochara Planetary Transits (Phases 8, 9, 10, 11) */}
+            {/* 3. Step 3: Kochara Planetary Transits (Phases 8, 9, 10, 11) */}
             <KocharaDetails
               transitResult={transitResult}
               onDateChange={(newDate) => setTransitDate(newDate)}
             />
 
-            {/* 5. Step 4: Rule-based Question Classifier (Phases 13, 14, 15) */}
+            {/* 4. Step 4: Rule-based Question Classifier (Phases 13, 14, 15) */}
             <QuestionAnalysis
               questions={classifiedQuestions}
               selectedCategory={selectedCategory}
@@ -312,13 +312,13 @@ export const App: React.FC = () => {
               />
             )}
 
-            {/* 6. Phase 53 — Resolution / Fulfilment Panel */}
+            {/* 5. Step 5: Resolution / Fulfilment Panel (Phase 53) */}
             <ResolutionPanel resolution={masterPrediction.prasnaResolution} />
 
-            {/* 6b. Section 15 — 🌙 Chandran மூலம் கிடைக்கும் காலம் / Chandran-Based Finding Time */}
+            {/* 6. Step 6: Chandran-Based Finding Time */}
             <ChandranTimingCard timingResult={masterPrediction.chandranFindingTime} />
 
-            {/* 7. Step 5: Master Arudam Prediction Panel (Phases 16-19, 26, 46) */}
+            {/* 7. Step 7: Master Arudam Prediction Panel (Phases 16-19, 26, 46) */}
             <div ref={predictionRef}>
               <PredictionPanel
                 prediction={masterPrediction}
@@ -326,7 +326,7 @@ export const App: React.FC = () => {
               />
             </div>
 
-            {/* 7. Step 6: "Why this prediction?" Rule Trace Flow (Phase 25) */}
+            {/* 8. Step 8: "Why this prediction?" Rule Trace Flow (Phase 25) */}
             <RuleTrace
               steps={masterPrediction.ruleTraceSteps}
               matchedRules={masterPrediction.matchedRules}

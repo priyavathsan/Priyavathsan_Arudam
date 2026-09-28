@@ -71,7 +71,7 @@ export const ResolutionPanel: React.FC<ResolutionPanelProps> = ({ resolution }) 
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800 pb-5">
         <div>
           <span className="text-xs font-mono font-semibold text-amber-400 tracking-wider uppercase block mb-1">
-            {isTamil ? 'படி 6 & 7: ஆருட நோக்கம் / தீர்வு' : 'Step 6 & 7: Prasna Purpose / Resolution'}
+            {isTamil ? 'படி 5: ஆருட நோக்கம் / தீர்வு' : 'Step 5: Prasna Purpose / Resolution'}
           </span>
           <h2 className={`text-2xl sm:text-3xl font-serif font-bold ${config.textColor} flex items-center gap-2 ${isTamil ? 'font-tamil' : ''}`}>
             <span>⚖️</span>

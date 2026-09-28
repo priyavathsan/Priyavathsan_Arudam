@@ -73,7 +73,7 @@ export const ChandranTimingCard: React.FC<ChandranTimingCardProps> = ({ timingRe
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800 pb-5">
         <div>
           <span className="text-xs font-mono font-semibold text-cyan-400 tracking-wider uppercase block mb-1">
-            {isTamil ? 'படி 7: சந்திரன் காலக் கணிப்பு' : 'Step 7: Chandran Timing Engine'}
+            {isTamil ? 'படி 6: சந்திரன் காலக் கணிப்பு' : 'Step 6: Chandran Timing Engine'}
           </span>
           <h2 className={`text-2xl sm:text-3xl font-serif font-bold text-amber-300 flex items-center gap-2.5 ${isTamil ? 'font-tamil' : ''}`}>
             <Moon className="w-7 h-7 text-cyan-300 fill-cyan-400/20" />
