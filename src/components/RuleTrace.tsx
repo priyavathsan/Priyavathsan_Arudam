@@ -22,7 +22,7 @@ export const RuleTrace: React.FC<RuleTraceProps> = ({
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800 pb-4">
         <div>
           <span className="text-xs font-mono font-semibold text-amber-400 tracking-wider uppercase block mb-1">
-            {isTamil ? 'படி 8: கணித தர்க்கம் & விதி விளக்கம்' : 'Step 8: Mathematical Trace & Rule Audit'}
+            {isTamil ? 'கணித தர்க்கம் & விதி விளக்கம்' : 'Mathematical Trace & Rule Audit'}
           </span>
           <h2 className={`text-xl sm:text-2xl font-serif font-bold text-slate-100 flex items-center gap-2 ${isTamil ? 'font-tamil' : ''}`}>
             <span>🔍</span>

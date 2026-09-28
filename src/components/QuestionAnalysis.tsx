@@ -34,7 +34,7 @@ export const QuestionAnalysis: React.FC<QuestionAnalysisProps> = ({
       {/* Header */}
       <div className="mb-5 border-b border-slate-800 pb-4">
         <span className="text-xs font-mono font-semibold text-amber-400 tracking-wider uppercase block mb-1">
-          {isTamil ? 'படி 4: கேள்வியின் தன்மை நிர்ணயம்' : 'Step 4: Question Identification'}
+          {isTamil ? 'கேள்வியின் தன்மை நிர்ணயம்' : 'Question Identification'}
         </span>
         <h2 className={`text-xl sm:text-2xl font-serif font-bold text-amber-300 ${isTamil ? 'font-tamil' : ''}`}>
           {isTamil

@@ -1,4 +1,5 @@
-import React, { useState, useMemo, useRef } from 'react';
+import React, { useState, useMemo, useRef, useEffect } from 'react';
+import { ArrowDown } from 'lucide-react';
 import { Header } from './components/Header';
 import { ArudamIntroduction } from './components/ArudamIntroduction';
 import { Disclaimer } from './components/Disclaimer';
@@ -49,6 +50,10 @@ export const App: React.FC = () => {
 
   // Core Arudam State (Default to example 5 as highlighted in user specification Phase 47, or 8)
   const [selectedNumber, setSelectedNumber] = useState<number>(5);
+  const [hasCalculatedArudam, setHasCalculatedArudam] = useState(false);
+  const [showStep4, setShowStep4] = useState(false);
+  const [step4ScrollRequest, setStep4ScrollRequest] = useState(0);
+  const step4Ref = useRef<HTMLElement>(null);
 
   // Chart Mode: Combined, Arudam, Kochara
   const [chartMode, setChartMode] = useState<'combined' | 'arudam' | 'kochara'>('combined');
@@ -64,9 +69,6 @@ export const App: React.FC = () => {
   const [selectedHouseNum, setSelectedHouseNum] = useState<number>(8);
   const [selectedSignId, setSelectedSignId] = useState<number>(3); // Gemini
   const [selectedPlanetId, setSelectedPlanetId] = useState<string>('mercury');
-
-  // Ref for scrolling to prediction on "Calculate Arudam" click
-  const predictionRef = useRef<HTMLDivElement>(null);
 
   // 1. Aruda Lagnam Calculation
   const arudaCalc = useMemo(() => calculateArudaLagnam(selectedNumber), [selectedNumber]);
@@ -136,10 +138,23 @@ export const App: React.FC = () => {
   };
 
   const handleCalculateClick = () => {
-    if (predictionRef.current) {
-      predictionRef.current.scrollIntoView({ behavior: 'smooth' });
-    }
+    setHasCalculatedArudam(true);
   };
+
+  const handleViewPrediction = () => {
+    setShowStep4(true);
+    setStep4ScrollRequest(request => request + 1);
+  };
+
+  useEffect(() => {
+    if (step4ScrollRequest > 0) {
+      const stickyHeaderHeight = document.querySelector('header')?.getBoundingClientRect().height ?? 0;
+      if (step4Ref.current) {
+        step4Ref.current.style.scrollMarginTop = `${stickyHeaderHeight + 16}px`;
+      }
+      step4Ref.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, [step4ScrollRequest]);
 
   const handleSelectHouse = (houseNum: number) => {
     setSelectedHouseNum(houseNum);
@@ -209,14 +224,16 @@ export const App: React.FC = () => {
               onCalculateArudam={handleCalculateClick}
             />
 
-            {/* 2. Step 2: Aruda Lagnam & 6th Rasi Calculation Result */}
-            <ArudamResult
-              selectedNumber={selectedNumber}
-              arudaResult={arudaCalc}
-              sixthResult={sixthCalc}
-            />
+            {hasCalculatedArudam && (
+              <>
+                {/* Step 2: Aruda Lagnam & 6th Rasi Derivation */}
+                <ArudamResult
+                  selectedNumber={selectedNumber}
+                  arudaResult={arudaCalc}
+                  sixthResult={sixthCalc}
+                />
 
-            {/* 3. South Indian Charts Section (Phases 6, 7, 10, 28, 29) */}
+                {/* Supporting chart for the Step 2 derivation */}
             <section className="bg-cosmic-900/90 border border-slate-700/80 rounded-2xl p-5 sm:p-6 shadow-xl backdrop-blur-sm relative overflow-hidden">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5 border-b border-slate-800 pb-3">
                 <div>
@@ -289,18 +306,43 @@ export const App: React.FC = () => {
               />
             </section>
 
-            {/* 3. Step 3: Kochara Planetary Transits (Phases 8, 9, 10, 11) */}
-            <KocharaDetails
-              transitResult={transitResult}
-              onDateChange={(newDate) => setTransitDate(newDate)}
-            />
+                {/* Step 3: Current Kochara Planetary Transits */}
+                <KocharaDetails
+                  transitResult={transitResult}
+                  onDateChange={(newDate) => setTransitDate(newDate)}
+                />
 
-            {/* 4. Step 4: Rule-based Question Classifier (Phases 13, 14, 15) */}
-            <QuestionAnalysis
-              questions={classifiedQuestions}
-              selectedCategory={selectedCategory}
-              onSelectCategory={(cat) => setSelectedCategory(cat)}
-            />
+                <div className="flex justify-end">
+                  <button
+                    type="button"
+                    onClick={handleViewPrediction}
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 px-6 py-3 font-bold text-cosmic-950 shadow-lg shadow-amber-500/20 transition-colors hover:from-amber-400 hover:to-amber-500"
+                  >
+                    <span className={isTamil ? 'font-tamil' : ''}>
+                      {isTamil ? 'ஆருட பலனைக் காண்க' : 'View Arudam Prediction'}
+                    </span>
+                    <ArrowDown className="h-4 w-4" aria-hidden="true" />
+                  </button>
+                </div>
+              </>
+            )}
+
+            {showStep4 && hasCalculatedArudam && (
+              <section ref={step4Ref} className="space-y-6" aria-labelledby="step-4-heading">
+                <header className="rounded-2xl border border-amber-500/30 bg-cosmic-900/90 p-5 sm:p-6 shadow-xl">
+                  <span className="text-xs font-mono font-semibold uppercase tracking-wider text-amber-400">
+                    {isTamil ? 'படி 4' : 'Step 4'}
+                  </span>
+                  <h2 id="step-4-heading" className={`mt-1 text-2xl font-serif font-bold text-amber-200 sm:text-3xl ${isTamil ? 'font-tamil' : ''}`}>
+                    {isTamil ? 'ஆரூட பலன் மற்றும் முழுமையான முடிவுகள்' : 'Arudam Prediction & Complete Results'}
+                  </h2>
+                </header>
+
+                <QuestionAnalysis
+                  questions={classifiedQuestions}
+                  selectedCategory={selectedCategory}
+                  onSelectCategory={(cat) => setSelectedCategory(cat)}
+                />
 
             {selectedCategory === 'job' && (
               <CareerJobSearchDirection
@@ -312,74 +354,63 @@ export const App: React.FC = () => {
               />
             )}
 
-            {/* 5. Step 5: Resolution / Fulfilment Panel (Phase 53) */}
-            <ResolutionPanel resolution={masterPrediction.prasnaResolution} />
+                <ResolutionPanel resolution={masterPrediction.prasnaResolution} />
+                <ChandranTimingCard timingResult={masterPrediction.chandranFindingTime} />
+                <PredictionPanel
+                  prediction={masterPrediction}
+                  onPrint={handlePrint}
+                />
+                <RuleTrace
+                  steps={masterPrediction.ruleTraceSteps}
+                  matchedRules={masterPrediction.matchedRules}
+                />
 
-            {/* 6. Step 6: Chandran-Based Finding Time */}
-            <ChandranTimingCard timingResult={masterPrediction.chandranFindingTime} />
+                {/* Supporting result sections */}
+                <div className="border-t border-slate-800/80 pt-6">
+                  <h3 className={`text-lg font-serif font-bold text-amber-300 mb-4 flex items-center gap-2 ${isTamil ? 'font-tamil' : ''}`}>
+                    <span>📦</span>
+                    <span>{isTamil ? 'காணாமல் போன பொருள் பிரத்யேக தேடல்' : 'Interactive Missing Object Specific Search'}</span>
+                  </h3>
+                  <MissingObjectCard
+                    arudaSign={legacyArudaSign}
+                    objectName={objectName}
+                    setObjectName={setObjectName}
+                    selectedPlanetId={selectedPlanetId}
+                    setSelectedPlanetId={setSelectedPlanetId}
+                    selectedHouseNum={selectedHouseNum}
+                    setSelectedHouseNum={handleSelectHouse}
+                    selectedSignId={selectedSignId}
+                    setSelectedSignId={setSelectedSignId}
+                    onAutoAnalyze={handleAutoAnalyze}
+                    traditionalClueText={combinedLegacyResult.traditionalClueText}
+                  />
+                </div>
 
-            {/* 7. Step 7: Master Arudam Prediction Panel (Phases 16-19, 26, 46) */}
-            <div ref={predictionRef}>
-              <PredictionPanel
-                prediction={masterPrediction}
-                onPrint={handlePrint}
-              />
-            </div>
+                <HouseAnalysisCard
+                  arudaSign={legacyArudaSign}
+                  selectedHouseNumber={selectedHouseNum}
+                  onSelectHouse={handleSelectHouse}
+                />
 
-            {/* 8. Step 8: "Why this prediction?" Rule Trace Flow (Phase 25) */}
-            <RuleTrace
-              steps={masterPrediction.ruleTraceSteps}
-              matchedRules={masterPrediction.matchedRules}
-            />
+                <NinePlanetsCard
+                  sixthSign={legacySixthSign}
+                  selectedPlanetId={selectedPlanetId}
+                  onSelectPlanet={setSelectedPlanetId}
+                />
 
-            {/* 8. Preserved Interactive Missing Object Analysis Card */}
-            <div className="border-t border-slate-800/80 pt-6">
-              <h3 className={`text-lg font-serif font-bold text-amber-300 mb-4 flex items-center gap-2 ${isTamil ? 'font-tamil' : ''}`}>
-                <span>📦</span>
-                <span>{isTamil ? 'காணாமல் போன பொருள் பிரத்யேக தேடல்' : 'Interactive Missing Object Specific Search'}</span>
-              </h3>
-              <MissingObjectCard
-                arudaSign={legacyArudaSign}
-                objectName={objectName}
-                setObjectName={setObjectName}
-                selectedPlanetId={selectedPlanetId}
-                setSelectedPlanetId={setSelectedPlanetId}
-                selectedHouseNum={selectedHouseNum}
-                setSelectedHouseNum={handleSelectHouse}
-                selectedSignId={selectedSignId}
-                setSelectedSignId={setSelectedSignId}
-                onAutoAnalyze={handleAutoAnalyze}
-                traditionalClueText={combinedLegacyResult.traditionalClueText}
-              />
-            </div>
+                <SignPlanetLocationCluesCard
+                  highlightSignId={selectedSignId}
+                  highlightPlanetId={selectedPlanetId}
+                  onSelectSign={setSelectedSignId}
+                  onSelectPlanet={setSelectedPlanetId}
+                />
 
-            {/* 9. Preserved House Analysis Card */}
-            <HouseAnalysisCard
-              arudaSign={legacyArudaSign}
-              selectedHouseNumber={selectedHouseNum}
-              onSelectHouse={handleSelectHouse}
-            />
-
-            {/* 10. Preserved 9 Planets Card for 6th Sign */}
-            <NinePlanetsCard
-              sixthSign={legacySixthSign}
-              selectedPlanetId={selectedPlanetId}
-              onSelectPlanet={setSelectedPlanetId}
-            />
-
-            {/* 11. Preserved Sign & Planet Location Clues Card */}
-            <SignPlanetLocationCluesCard
-              highlightSignId={selectedSignId}
-              highlightPlanetId={selectedPlanetId}
-              onSelectSign={setSelectedSignId}
-              onSelectPlanet={setSelectedPlanetId}
-            />
-
-            {/* 12. Calculation Info & Developer Debug Panel (Phases 32 & 48) */}
-            <CalculationInfoPanel
-              transitResult={transitResult}
-              prediction={masterPrediction}
-            />
+                <CalculationInfoPanel
+                  transitResult={transitResult}
+                  prediction={masterPrediction}
+                />
+              </section>
+            )}
           </div>
         )}
 
